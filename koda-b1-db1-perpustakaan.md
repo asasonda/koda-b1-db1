@@ -26,28 +26,31 @@ Entitas : rak_buku
 - nama_rak = string
 
 Entitas : Petugas
+
 - id_petugas = id (PK)
 - nama = string
 
 Entitas : Peminjaman
+
 - id_user = (FK)
 - id_buku = (FK)
 - id_petugas = (FK)
 
-
 ## diagram
-``` mermaid
+
+```mermaid
 erDiagram
-    USER ||--o{ PEMINJAMAN : allows
-    PETUGAS || --o{ PEMINJAMAN : allows
-    KATEGORI || --o{ BUKU : allows
-    RAK_BUKU || --o{ BUKU : allows
-    BUKU || --o{ PEMINJAMAN : allows
+    USER ||--o{ PEMINJAMAN : meminjam
+    PETUGAS || --o{ PEMINJAMAN : mengurus
+    KATEGORI || --o{ BUKU : includes
+    RAK_BUKU || --o{ BUKU : includes
+    BUKU || --o{ PEMINJAMAN : dipinjam
 
     USER {
         int(PK) id_user
         string nama
         string asal
+        string contact
     }
     BUKU {
         int(PK) id_buku
@@ -66,10 +69,14 @@ erDiagram
     PETUGAS{
         int(PK) id_petugas
         string nama
+        string contact
     }
     PEMINJAMAN{
+        int(PK) id_peminjaman
         int(FK) id_user
         int(FK) id_petugas
         int(FK) id_buku
+        date tanggal_peminjaman
+        date tanggal_pengembalian
     }
 ```
